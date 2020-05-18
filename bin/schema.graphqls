@@ -1,0 +1,44 @@
+type Query {
+	"測試"
+    hello: String
+	"自己(第一位使用者)"
+    me: User
+    "id尋找使用者"
+    user(id: String): User
+	"全部使用者"
+    users: [User]
+    "id尋找貼文"
+    post(id: String): Post
+	"全部貼文"
+    posts: [Post]
+}
+
+schema{
+	query: Query
+}
+
+"使用者"
+type User {
+	"辨識碼"
+	id: String
+	"名字"
+    name: String
+	"年齡"
+    age: String
+  	"朋友們"
+    friends: [User]
+}
+
+"貼文"
+type Post {
+	"識別碼"
+    id: String
+ 	"作者"
+    author: User
+ 	"標題"
+    title: String
+ 	"內容"
+    content: String
+ 	"按讚者"
+    likeGivers: [User]
+}
