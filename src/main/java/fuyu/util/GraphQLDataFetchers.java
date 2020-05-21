@@ -12,19 +12,6 @@ import graphql.schema.DataFetcher;
 
 @Component
 public class GraphQLDataFetchers {
-	
-//	private static List<Map<String, String>> users = Arrays.asList(
-//			ImmutableMap.of("id", "1", "name", "Fong", "age", "23", "friendIds", "2"),
-//			ImmutableMap.of("id", "2", "name", "Kevin", "age", "40", "friendIds", "1"),
-//			ImmutableMap.of("id", "3", "name", "Mary", "age", "18", "friendIds", "1"));
-//
-//	private static List<Map<String, String>> posts = Arrays.asList(
-//			ImmutableMap.of("id", "1", "authorId", "1", "title", "Hello World!", "content", "This is my first post.",
-//					"likeGiverIds", "2"),
-//			ImmutableMap.of("id", "2", "authorId", "2", "title", "Good Night", "content", "Have a Nice Dream =)",
-//					"likeGiverIds", "2, 3"),
-//			ImmutableMap.of("id", "3", "authorId", "1", "title", "I Love U", "content", "Here's my second post!",
-//					"likeGiverIds", ""));
 
 	public DataFetcher<?> getFirstUser() {
 		return dataFetchingEnvironment -> {
@@ -63,6 +50,14 @@ public class GraphQLDataFetchers {
 			User source = dataFetchingEnvironment.getSource();
 			List<String> friendIds = source.getFriendIds();
 			return UserData.userData.stream().filter(user -> friendIds.contains(user.getId())).toArray();
+		};
+	}
+
+	public DataFetcher<?> getPostByPostId() {
+		return dataFetchingEnvironment -> {
+			User source = dataFetchingEnvironment.getSource();
+			List<String> posts = source.getPosts();
+			return PostData.postData.stream().filter(post -> posts.contains(post.getId())).toArray();
 		};
 	}
 

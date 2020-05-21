@@ -27,7 +27,7 @@ public class GraphQLUtil {
 	@Autowired
 	GraphQLDataFetchers graphQLDataFetchers;
 
-	public Map<String, Object> graphQLTest(String query) throws IOException {
+	public Map<String, Object> getGraphQL(String query) throws IOException {
 		URL url = Resources.getResource("schema.graphqls");
 		String schema = Resources.toString(url, Charsets.UTF_8);
 
@@ -51,15 +51,18 @@ public class GraphQLUtil {
 
 	private RuntimeWiring buildWiring() {
 		RuntimeWiring runtimeWiring = newRuntimeWiring()
-				.type("Query",
-						typeWiring -> typeWiring.dataFetcher("hello", new StaticDataFetcher("world"))
-								.dataFetcher("me", graphQLDataFetchers.getFirstUser())
-								.dataFetcher("user", graphQLDataFetchers.getUserById())
-								.dataFetcher("users", graphQLDataFetchers.getAllUsers())
-								.dataFetcher("post", graphQLDataFetchers.getPostById())
-								.dataFetcher("posts", graphQLDataFetchers.getAllPosts()))
-				.type("User", typeWiring -> typeWiring.dataFetcher("friends", graphQLDataFetchers.getUserByFriends()))
-				.type("Post", typeWiring -> typeWiring.dataFetcher("author", graphQLDataFetchers.getUserByPostAuthor())
+				.type("Query",typeWiring -> typeWiring
+						.dataFetcher("hello", new StaticDataFetcher("world"))
+						.dataFetcher("me", graphQLDataFetchers.getFirstUser())
+						.dataFetcher("user", graphQLDataFetchers.getUserById())
+						.dataFetcher("users", graphQLDataFetchers.getAllUsers())
+						.dataFetcher("post", graphQLDataFetchers.getPostById())
+						.dataFetcher("posts", graphQLDataFetchers.getAllPosts()))
+				.type("User", typeWiring -> typeWiring
+						.dataFetcher("friends", graphQLDataFetchers.getUserByFriends())
+						.dataFetcher("posts", graphQLDataFetchers.getPostByPostId()))
+				.type("Post", typeWiring -> typeWiring
+						.dataFetcher("author", graphQLDataFetchers.getUserByPostAuthor())
 						.dataFetcher("likeGivers", graphQLDataFetchers.getUserByPostLikeGivers()))
 				.build();
 		return runtimeWiring;

@@ -30,7 +30,7 @@ public class GraphQLTest {
 		GraphQLSchema graphQLSchema = buildSchema(schema);
 		GraphQL build = GraphQL.newGraphQL(graphQLSchema).build();
 
-		ExecutionResult executionResult = build.execute("{ post(id: \"3\") { title content likeGivers { name } } }");
+		ExecutionResult executionResult = build.execute("{ me { name friends { name } posts { title } } }");
 		System.out.println(executionResult.getData().toString());
 		List<GraphQLError> errors = executionResult.getErrors();
 		System.out.println("errors: " + errors);
@@ -53,7 +53,8 @@ public class GraphQLTest {
 						.dataFetcher("post", graphQLDataFetchers.getPostById())
 						.dataFetcher("posts", graphQLDataFetchers.getAllPosts()))
 				.type("User", typeWiring -> typeWiring
-						.dataFetcher("friends", graphQLDataFetchers.getUserByFriends()))
+						.dataFetcher("friends", graphQLDataFetchers.getUserByFriends())
+						.dataFetcher("posts", graphQLDataFetchers.getPostByPostId()))
 				.type("Post", typeWiring -> typeWiring
 						.dataFetcher("author", graphQLDataFetchers.getUserByPostAuthor())
 						.dataFetcher("likeGivers", graphQLDataFetchers.getUserByPostLikeGivers()))

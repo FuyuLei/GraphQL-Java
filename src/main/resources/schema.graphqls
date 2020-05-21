@@ -13,10 +13,6 @@ type Query {
     posts: [Post]
 }
 
-schema{
-	query: Query
-}
-
 "使用者"
 type User {
 	"辨識碼"
@@ -27,6 +23,8 @@ type User {
     age: String
   	"朋友們"
     friends: [User]
+	"貼文"
+    posts: [Post]
 }
 
 "貼文"

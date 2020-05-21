@@ -7,12 +7,14 @@ public class User {
 	public String name;
 	public String age;
 	public List<String> friendIds;
+	public List<String> posts;
 
-	public User(String id, String name, String age, List<String> friendIds) {
+	public User(String id, String name, String age, List<String> friendIds, List<String> posts) {
 		this.id = id;
 		this.name = name;
 		this.age = age;
 		this.friendIds = friendIds;
+		this.posts = posts;
 	}
 
 	public String getId() {
@@ -47,6 +49,14 @@ public class User {
 		this.friendIds = friendIds;
 	}
 
+	public List<String> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<String> posts) {
+		this.posts = posts;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -69,6 +79,11 @@ public class User {
 		if (friendIds != null) {
 			builder.append("friendIds=");
 			builder.append(friendIds);
+			builder.append(", ");
+		}
+		if (posts != null) {
+			builder.append("posts=");
+			builder.append(posts);
 		}
 		builder.append("]");
 		return builder.toString();

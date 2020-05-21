@@ -26,7 +26,7 @@ public class GraphQLController {
 	@RequestMapping(value = "/data", method = { RequestMethod.POST })
 	public ResponseEntity<?> getGraphQLData(@RequestBody Map<String, Object> body) throws IOException {
 		String query = (String) body.get("query");
-		Map<String, Object> result = graphQLUtil.graphQLTest(query);
+		Map<String, Object> result = graphQLUtil.getGraphQL(query);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
