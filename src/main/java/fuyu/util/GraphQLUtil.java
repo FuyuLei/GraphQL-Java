@@ -51,6 +51,7 @@ public class GraphQLUtil {
 
 	private RuntimeWiring buildWiring() {
 		RuntimeWiring runtimeWiring = newRuntimeWiring()
+				// Query下的查詢
 				.type("Query",typeWiring -> typeWiring
 						.dataFetcher("hello", new StaticDataFetcher("world"))
 						.dataFetcher("me", graphQLDataFetchers.getFirstUser())
@@ -58,6 +59,7 @@ public class GraphQLUtil {
 						.dataFetcher("users", graphQLDataFetchers.getAllUsers())
 						.dataFetcher("post", graphQLDataFetchers.getPostById())
 						.dataFetcher("posts", graphQLDataFetchers.getAllPosts()))
+				// 自定義ObjectType裡有連結到其他ObjectType的資料
 				.type("User", typeWiring -> typeWiring
 						.dataFetcher("friends", graphQLDataFetchers.getUserByFriends())
 						.dataFetcher("posts", graphQLDataFetchers.getPostByPostId()))

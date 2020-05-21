@@ -21,7 +21,9 @@ public class GraphQLDataFetchers {
 
 	public DataFetcher<?> getUserById() {
 		return dataFetchingEnvironment -> {
+			// 拿Query時指定的id
 			String userId = dataFetchingEnvironment.getArgument("id");
+			// 用id去做篩選
 			return UserData.userData.stream().filter(user -> user.getId().equals(userId)).findFirst();
 		};
 	}
@@ -47,7 +49,9 @@ public class GraphQLDataFetchers {
 	
 	public DataFetcher<?> getUserByFriends() {
 		return dataFetchingEnvironment -> {
+	        // 取得source資料
 			User source = dataFetchingEnvironment.getSource();
+	        // 使用source資料裡的friends裡的資料去做篩選
 			List<String> friendIds = source.getFriendIds();
 			return UserData.userData.stream().filter(user -> friendIds.contains(user.getId())).toArray();
 		};
